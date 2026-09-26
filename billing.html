@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing</title>
+    <link rel="stylesheet" href="CSS/common.css">
+</head>
+<body>
+    <div id = "container" class="Container">
+       <img src="images/logo.jpg" alt="companyLogo" style="height:100px; width:100px;"/> 
+        <hr />
+        <a href="shopping.html">Go Shopping</a> | &nbsp;&nbsp;
+        <a href="billing.html">Billing</a> | &nbsp;&nbsp;
+        <a href="about.html">About Us</a> | &nbsp;&nbsp;
+        <hr />
+            <div id="adDiv" class="AdContainer">
+                <img src="#" class="AdImage">
+            </div>
+        <hr>
+            <h2>Your Total Bill: </h2>
+        <hr/>
+        <div id="pageContentPlaceHolder" class="ContentPlaceHolder">
+            <center>
+                <table id="billingTable" border="1" style="width: 400px; text-align: center;">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="billingTableBody" >
+                    
+                    </tbody>
+                </table>
+                <div id="divTotal" style="background-color: aquamarine;"></div>
+            </center>
+        </div>
+        <hr>
+        <center>
+            <h4>Developed By AVDHOOT WAKALE</h4>
+            <a href="facebook.com"><img src="images/LogoFacebook.png" alt="FacebookPageLink" class="SocialMediaIcon"></a> &nbsp;&nbsp;
+            <a href="Instagram.com"><img src="images/InstagramLogo.jpg" alt="InstagramPageLink" class="SocialMediaIcon"></a>  &nbsp;&nbsp;
+            
+            <a href="Linkedin.com"><img src="images/LinkedinLogo.png" alt="LinkedinPageLink" class="SocialMediaIcon"></a>  &nbsp;&nbsp;
+
+        </center>
+
+        <hr>
+    </div>
+
+    <script>
+        function showBill()
+        {
+            var refToDivTotal = document.getElementById("divTotal");
+            var productsPurchasedInString = localStorage.getItem("productPurchased");
+        
+            // if(productsPurchasedInString != undefined && productsPurchased != null){
+            if(productsPurchasedInString !== null && productsPurchasedInString !== undefined){
+                // var productsPurchased = JSON.parse(productsPurchasedInString);
+                var productsPurchased = JSON.parse(productsPurchasedInString);
+                var refTobillingTableBody = document.getElementById("billingTableBody");
+                var total = 0;
+                // for(i = 0; i <productsPurchased.length; i++){
+                for(var i = 0; i < productsPurchased.length; i++){
+                    var product = productsPurchased[i];
+                    // total = tatal + product.Price;
+                    total = total + product.Price;
+                    var billedItemUI = `<tr>
+                        <td>${i + 1}</td>
+                        <td>${product.Title}</td>
+                        <td>${product.Price}</td>
+                    </tr>`; 
+
+                    // refTobillingTableBody.inner = refTobillingTableBody.innerHTML + billedItemUI;
+                    refTobillingTableBody.innerHTML += billedItemUI;
+                }
+                // refToDivTotal.innerHTML = `<h2>Total Payable Amount is: INR ${total}</h2><input type="button" value = "Pay" onclick()="Pay()"/>`;
+                refToDivTotal.innerHTML = `<h2>Total Payable Amount is: INR ${total}</h2><input type="button" value="Pay" onclick="Pay()" />`;
+            // }else{
+            }else{
+                alert("Purchase Something first");
+                window.location.href = "shopping.html";
+            }
+        }
+        function Pay()
+        {
+            alert("Assuming you payed! Redirecting You to shopping page. Please Wait!");
+            localStorage.removeItem("productPurchased");
+            window.location.href = "shopping.html";
+        }
+        showBill();
+
+    </script>
+</body>
+</html>
